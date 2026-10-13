@@ -23,4 +23,8 @@
 	<!-- %s will be replaced by the def name -->
 	<SaveStorageSettings.UnableToLoadRecipeDef>Не получилось загрузить: %s</SaveStorageSettings.UnableToLoadRecipeDef>
 	<SaveStorageSettings.ResearchNotDoneForRecipeDef>Не исследовано: %s</SaveStorageSettings.ResearchNotDoneForRecipeDef>
+
+	<SaveStorageSettings.SettingsCategory>Настройки хранения</SaveStorageSettings.SettingsCategory>
+	<SaveStorageSettings.SkipRecipeResearchCheck>Игнорировать исследования при загрузке заданий</SaveStorageSettings.SkipRecipeResearchCheck>
+	<SaveStorageSettings.SkipRecipeResearchCheckDesc>Загружать сохранённые задания, даже если исследование рецепта не завершено. Другие моды, которые загружают задания через этот мод, используют ту же настройку.</SaveStorageSettings.SkipRecipeResearchCheckDesc>
 </LanguageData>

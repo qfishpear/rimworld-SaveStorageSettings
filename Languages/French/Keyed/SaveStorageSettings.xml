@@ -23,4 +23,8 @@
 	<!-- %s will be replaced by the def name -->
 	<SaveStorageSettings.UnableToLoadRecipeDef>Impossible de charger la tâche avec RecipeDef de %s</SaveStorageSettings.UnableToLoadRecipeDef>
 	<SaveStorageSettings.ResearchNotDoneForRecipeDef>La recherche n'est pas faite pour %s</SaveStorageSettings.ResearchNotDoneForRecipeDef>
+
+	<SaveStorageSettings.SettingsCategory>Paramètres de stockage</SaveStorageSettings.SettingsCategory>
+	<SaveStorageSettings.SkipRecipeResearchCheck>Ignorer les prérequis de recherche au chargement des tâches</SaveStorageSettings.SkipRecipeResearchCheck>
+	<SaveStorageSettings.SkipRecipeResearchCheckDesc>Charge les tâches enregistrées même si la recherche de la recette n'est pas terminée. Les autres mods qui chargent des tâches via ce mod suivent cette option.</SaveStorageSettings.SkipRecipeResearchCheckDesc>
 </LanguageData>

@@ -24,4 +24,7 @@
   <SaveStorageSettings.UnableToLoadRecipeDef>无法载入RecipeDef为 %s 的清单</SaveStorageSettings.UnableToLoadRecipeDef>
   <SaveStorageSettings.ResearchNotDoneForRecipeDef>%s 的研究项目未完成</SaveStorageSettings.ResearchNotDoneForRecipeDef>
 
+  <SaveStorageSettings.SettingsCategory>储存设定</SaveStorageSettings.SettingsCategory>
+  <SaveStorageSettings.SkipRecipeResearchCheck>载入清单时忽略研究要求</SaveStorageSettings.SkipRecipeResearchCheck>
+  <SaveStorageSettings.SkipRecipeResearchCheckDesc>勾选后，即使配方所需的研究尚未完成，也可以载入已保存的工作清单。通过本模组载入清单的其他模组也会使用此选项。</SaveStorageSettings.SkipRecipeResearchCheckDesc>
 </LanguageData>

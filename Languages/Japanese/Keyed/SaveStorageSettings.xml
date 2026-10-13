@@ -25,4 +25,7 @@
   <SaveStorageSettings.UnableToLoadRecipeDef>RecipeDef(%s)で加工命令を読込めません</SaveStorageSettings.UnableToLoadRecipeDef>
   <SaveStorageSettings.ResearchNotDoneForRecipeDef>%sに必要な研究が完了してない</SaveStorageSettings.ResearchNotDoneForRecipeDef>
 
+  <SaveStorageSettings.SettingsCategory>貯蔵設定</SaveStorageSettings.SettingsCategory>
+  <SaveStorageSettings.SkipRecipeResearchCheck>加工命令の読み込み時に研究要件を無視</SaveStorageSettings.SkipRecipeResearchCheck>
+  <SaveStorageSettings.SkipRecipeResearchCheckDesc>有効にすると、レシピに必要な研究が未完了でも、保存した加工命令を読み込めます。このModを通じて加工命令を読み込む他のModもこの設定に従います。</SaveStorageSettings.SkipRecipeResearchCheckDesc>
 </LanguageData>

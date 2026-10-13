@@ -23,4 +23,8 @@
 	<!-- %s will be replaced by the def name -->
 	<SaveStorageSettings.UnableToLoadRecipeDef>Unable to load bill with RecipeDef of %s</SaveStorageSettings.UnableToLoadRecipeDef>
 	<SaveStorageSettings.ResearchNotDoneForRecipeDef>Research is not done for %s</SaveStorageSettings.ResearchNotDoneForRecipeDef>
+
+	<SaveStorageSettings.SettingsCategory>Save Storage Settings</SaveStorageSettings.SettingsCategory>
+	<SaveStorageSettings.SkipRecipeResearchCheck>Ignore research requirements when loading bills</SaveStorageSettings.SkipRecipeResearchCheck>
+	<SaveStorageSettings.SkipRecipeResearchCheckDesc>Load saved work bills even if the recipe's research is not finished. Other mods that load bills through this mod follow this setting.</SaveStorageSettings.SkipRecipeResearchCheckDesc>
 </LanguageData>

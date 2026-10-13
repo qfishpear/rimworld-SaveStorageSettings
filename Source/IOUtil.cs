@@ -653,6 +653,15 @@ namespace SaveStorageSettings
             return true;
         }
 
+        private static bool RecipeResearchBlocksLoad(RecipeDef def)
+        {
+            if (SaveStorageSettingsMod.Settings != null && SaveStorageSettingsMod.Settings.skipRecipeResearchCheck)
+            {
+                return false;
+            }
+            return def.researchPrerequisite != null && !def.researchPrerequisite.IsFinished;
+        }
+
         private static bool TryCreateBill(StreamReader sr, out Bill_Production bill)
         {
             bill = null;
@@ -677,7 +686,7 @@ namespace SaveStorageSettings
                                     Log.Warning(msg);
                                     return false;
                                 }
-                                if (def.researchPrerequisite != null && !def.researchPrerequisite.IsFinished)
+                                if (RecipeResearchBlocksLoad(def))
                                 {
                                     string msg = "SaveStorageSettings.ResearchNotDoneForRecipeDef".Translate().Replace("%s", def.label);
                                     Messages.Message(msg, MessageTypeDefOf.SilentInput);
@@ -710,7 +719,7 @@ namespace SaveStorageSettings
                                     Log.Warning(msg);
                                     return false;
                                 }
-                                if (def.researchPrerequisite != null && !def.researchPrerequisite.IsFinished)
+                                if (RecipeResearchBlocksLoad(def))
                                 {
                                     string msg = "SaveStorageSettings.ResearchNotDoneForRecipeDef".Translate().Replace("%s", def.label);
                                     Messages.Message(msg, MessageTypeDefOf.SilentInput);
