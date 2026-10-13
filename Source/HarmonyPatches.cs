@@ -7,7 +7,6 @@ using UnityEngine;
 using Verse;
 using System;
 using Verse.Sound;
-using System.Linq;
 
 namespace SaveStorageSettings
 {
@@ -409,26 +408,6 @@ namespace SaveStorageSettings
         private static void SetReadingPolicy(Dialog_ManageReadingPolicies dialog, ReadingPolicy selectedPolicy)
         {
             typeof(Dialog_ManageReadingPolicies).GetProperty("SelectedPolicy", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty).SetValue(dialog, selectedPolicy, null);
-        }
-    }
-
-    // Fix the redundant allowedDefs in the default "Anything" reading policy's defFilter
-    [HarmonyPatch(typeof(ReadingPolicyDatabase), "GenerateStartingPolicies")]
-    static class Patch_ReadingPolicyDatabase_GenerateStartingPolicies
-    {
-        static void Postfix(ReadingPolicyDatabase __instance)
-        {
-            ReadingPolicy allReadingPolicy = __instance.AllReadingPolicies.FirstOrDefault(p => p.label == "AllReadingPolicy".Translate());
-            if (allReadingPolicy == null) return;
-
-            allReadingPolicy.defFilter.SetDisallowAll(null, null);
-            foreach (ThingDef thingDef in DefDatabase<ThingDef>.AllDefs)
-            {
-                if (thingDef.HasComp<CompBook>())
-                {
-                    allReadingPolicy.defFilter.SetAllow(thingDef, true);
-                }
-            }
         }
     }
 
