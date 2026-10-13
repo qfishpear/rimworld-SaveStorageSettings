@@ -95,6 +95,7 @@ namespace SaveStorageSettings.Dialog
                 foreach (Bill b in bills)
                 {
                     this.BillStack.AddBill(b);
+                    EverybodyGetsOneUtil.ApplyPersonCounter(b);
                 }
                 bills.Clear();
                 bills = null;
