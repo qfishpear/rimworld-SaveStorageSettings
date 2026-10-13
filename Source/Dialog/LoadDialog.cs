@@ -1,7 +1,6 @@
 ﻿using RimWorld;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Verse;
 using static SaveStorageSettings.Dialog.LoadCraftingDialog;
 
@@ -85,12 +84,6 @@ namespace SaveStorageSettings.Dialog
 
         protected override void DoFileInteraction(FileInfo fi)
         {
-            int maxBillCount = 15;
-            if (ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name.Contains("No Max Bills")))
-            {
-                maxBillCount = 125;
-            }
-
             List<Bill> bills = IOUtil.LoadCraftingBills(fi);
             if (bills != null && bills.Count > 0)
             {
@@ -101,14 +94,7 @@ namespace SaveStorageSettings.Dialog
 
                 foreach (Bill b in bills)
                 {
-                    if (this.BillStack.Count < maxBillCount)
-                    {
-                        this.BillStack.AddBill(b);
-                    }
-                    else
-                    {
-                        Log.Warning("Work Table has too many bills. Bill for [" + b.recipe.defName + "] will not be added.");
-                    }
+                    this.BillStack.AddBill(b);
                 }
                 bills.Clear();
                 bills = null;
@@ -145,12 +131,6 @@ namespace SaveStorageSettings.Dialog
 
         protected override void DoFileInteraction(FileInfo fi)
         {
-            int maxBillCount = 15;
-            if (ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name.Contains("No Max Bills")))
-            {
-                maxBillCount = 125;
-            }
-
             List<Bill> bills = IOUtil.LoadOperationBills(fi, this.Pawn);
             if (bills != null && bills.Count > 0)
             {
@@ -161,14 +141,7 @@ namespace SaveStorageSettings.Dialog
 
                 foreach (Bill b in bills)
                 {
-                    if (this.Pawn.BillStack.Count < maxBillCount)
-                    {
-                        this.Pawn.BillStack.AddBill(b);
-                    }
-                    else
-                    {
-                        Log.Warning("Bills Count: " + this.Pawn.BillStack.Count);
-                    }
+                    this.Pawn.BillStack.AddBill(b);
                 }
                 bills.Clear();
                 bills = null;
