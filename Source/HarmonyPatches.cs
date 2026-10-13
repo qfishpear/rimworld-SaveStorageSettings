@@ -260,7 +260,7 @@ namespace SaveStorageSettings
                 ApparelPolicy policy = Current.Game.outfitDatabase.MakeNewOutfit();
                 SetApparelPolicy(__instance, policy);
 
-                Find.WindowStack.Add(new LoadFilterDialog("Apparel_Management", policy.filter));
+                Find.WindowStack.Add(new LoadFilterDialog("Apparel_Management", policy));
             }
 
             ApparelPolicy selectedPolicy = GetSelectedPolicy(__instance);
@@ -268,11 +268,11 @@ namespace SaveStorageSettings
             {
                 if (Widgets.ButtonText(new Rect(x, 50f, 72f, 35f), "SaveStorageSettings.LoadOutfit".Translate(), true, false, true))
                 {
-                    Find.WindowStack.Add(new LoadFilterDialog("Apparel_Management", selectedPolicy.filter));
+                    Find.WindowStack.Add(new LoadFilterDialog("Apparel_Management", selectedPolicy));
                 }
                 if (Widgets.ButtonText(new Rect(x + 77, 50f, 72f, 35f), "SaveStorageSettings.SaveOutfit".Translate(), true, false, true))
                 {
-                    Find.WindowStack.Add(new SaveFilterDialog("Apparel_Management", selectedPolicy.filter));
+                    Find.WindowStack.Add(new SaveFilterDialog("Apparel_Management", selectedPolicy));
                 }
             }
         }

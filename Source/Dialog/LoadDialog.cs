@@ -8,11 +8,11 @@ namespace SaveStorageSettings.Dialog
 {
     class LoadFilterDialog : FileListDialog
     {
-        private readonly ThingFilter ThingFilter;
+        private readonly ApparelPolicy Policy;
 
-        internal LoadFilterDialog(string storageTypeName, ThingFilter thingFilter) : base(storageTypeName)
+        internal LoadFilterDialog(string storageTypeName, ApparelPolicy policy) : base(storageTypeName)
         {
-            this.ThingFilter = thingFilter;
+            this.Policy = policy;
             base.interactButLabel = "LoadGameButton".Translate();
         }
 
@@ -26,7 +26,7 @@ namespace SaveStorageSettings.Dialog
 
         protected override void DoFileInteraction(FileInfo fi)
         {
-            IOUtil.LoadFilters(this.ThingFilter, fi);
+            IOUtil.LoadApparelPolicy(this.Policy, fi);
             base.Close();
         }
     }

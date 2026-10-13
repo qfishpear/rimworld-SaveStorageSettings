@@ -6,11 +6,11 @@ namespace SaveStorageSettings.Dialog
 {
     class SaveFilterDialog : FileListDialog
     {
-        private readonly ThingFilter ThingFilter;
+        private readonly ApparelPolicy Policy;
 
-        internal SaveFilterDialog(string storageTypeName, ThingFilter thingFilter) : base(storageTypeName)
+        internal SaveFilterDialog(string storageTypeName, ApparelPolicy policy) : base(storageTypeName)
         {
-            this.ThingFilter = thingFilter;
+            this.Policy = policy;
             this.interactButLabel = "OverwriteButton".Translate();
         }
 
@@ -24,7 +24,7 @@ namespace SaveStorageSettings.Dialog
 
         protected override void DoFileInteraction(FileInfo fi)
         {
-            IOUtil.SaveFilterSettings(this.ThingFilter, fi);
+            IOUtil.SaveApparelPolicySettings(this.Policy, fi);
             base.Close();
         }
     }

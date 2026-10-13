@@ -12,13 +12,12 @@ namespace SaveStorageSettings
     internal static class IOUtil
     {
         private const string BREAK = "---";
-        public static bool LoadFilters(ThingFilter filter, FileInfo fi)
+        public static bool LoadApparelPolicy(ApparelPolicy policy, FileInfo fi)
         {
             try
             {
                 if (fi.Exists)
                 {
-                    // Load Data
                     using (StreamReader sr = new StreamReader(fi.FullName))
                     {
                         if (sr.EndOfStream ||
@@ -29,7 +28,7 @@ namespace SaveStorageSettings
 
                         if (kv != null && "1".Equals(kv[1]))
                         {
-                            ReadFiltersFromFile(filter, sr);
+                            ReadApparelPolicyFromFile(policy, sr);
                         }
                         else
                         {
@@ -343,18 +342,19 @@ namespace SaveStorageSettings
             Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
         }
 
-        public static bool SaveFilterSettings(ThingFilter filter, FileInfo fi)
+        public static bool SaveApparelPolicySettings(ApparelPolicy policy, FileInfo fi)
         {
             try
             {
-                // Write Data
                 using (FileStream fileStream = File.Open(fi.FullName, FileMode.Create, FileAccess.Write))
                 {
                     using (StreamWriter sw = new StreamWriter(fileStream))
                     {
                         WriteField(sw, "Version", "1");
 
-                        WriteFiltersToFile(filter, sw);
+                        WriteFiltersToFile(policy.filter, sw);
+                        // After the filter so older builds still load allowances, then stop on this key.
+                        WriteField(sw, "name", policy.label);
                     }
                 }
             }
@@ -1200,6 +1200,45 @@ namespace SaveStorageSettings
                     break;
             }
             return false;
+        }
+
+        private static void ReadApparelPolicyFromFile(ApparelPolicy policy, StreamReader sr)
+        {
+            ThingFilterReflection tfr = new ThingFilterReflection(policy.filter);
+            bool changed = false;
+            try
+            {
+                while (!sr.EndOfStream)
+                {
+                    if (ReadField(sr, out string[] kv))
+                    {
+                        if ("name".Equals(kv[0]))
+                        {
+                            if (!kv[1].NullOrEmpty())
+                            {
+                                policy.label = kv[1];
+                            }
+                            continue;
+                        }
+
+                        if (handleFilterReadLine(policy.filter, kv))
+                        {
+                            changed = true;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                if (changed)
+                {
+                    tfr.SettingsChangedCallback();
+                }
+            }
         }
 
         private static void ReadFiltersFromFile(ThingFilter filter, StreamReader sr)
