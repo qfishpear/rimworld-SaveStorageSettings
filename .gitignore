@@ -7,3 +7,6 @@ Source/SaveStorageSettingsUtil/obj/
 /Source/packages/
 Thumbs.db
 /About/PublishedFileId.txt
+
+AGENTS.md
+.cursor
