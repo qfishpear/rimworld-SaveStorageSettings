@@ -383,6 +383,12 @@ namespace SaveStorageSettings
                         {
                             WriteField(sw, "Priority", setting.Priority.ToString());
                         }
+
+                        // After Priority so older builds still load the filter and priority, then stop on this key.
+                        if (setting.owner is IRenameable renameable && !IsUnchangedStorageName(renameable))
+                        {
+                            WriteField(sw, "name", renameable.RenamableLabel);
+                        }
                     }
                 }
             }
@@ -1280,10 +1286,102 @@ namespace SaveStorageSettings
             }
         }
 
+        // Auto names are BaseLabel or "BaseLabel N", the same strings NewZoneName and NewStorageName assign.
+        private static bool IsUnchangedStorageName(IRenameable renameable)
+        {
+            string name = renameable.RenamableLabel;
+            string baseLabel = renameable.BaseLabel;
+            if (name.NullOrEmpty() || name == baseLabel)
+            {
+                return true;
+            }
+            if (baseLabel.NullOrEmpty())
+            {
+                return false;
+            }
+
+            string prefix = baseLabel + " ";
+            if (!name.StartsWith(prefix) || name.Length == prefix.Length)
+            {
+                return false;
+            }
+
+            string suffix = name.Substring(prefix.Length);
+            if (suffix[0] == '0')
+            {
+                return false;
+            }
+            for (int i = 0; i < suffix.Length; i++)
+            {
+                if (suffix[i] < '0' || suffix[i] > '9')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static Map StorageOwnerMap(IStoreSettingsParent owner)
+        {
+            if (owner is Zone zone)
+            {
+                return zone.Map;
+            }
+            if (owner is StorageGroup group)
+            {
+                return group.Map;
+            }
+            if (owner is Thing thing)
+            {
+                return thing.Map;
+            }
+            return null;
+        }
+
+        // Same names the rename dialog rejects: another zone label or storage group on this map.
+        private static bool IsStorageNameInUse(Map map, IStoreSettingsParent except, string name)
+        {
+            if (map.zoneManager.AllZones.Any(z => z != except && z.label == name))
+            {
+                return true;
+            }
+            return map.storageGroups.StorageGroupsForReading.Any(g => g != except && g.RenamableLabel == name);
+        }
+
+        private static void ApplyLoadedStorageName(StorageSettings setting, string name)
+        {
+            if (name.NullOrEmpty())
+            {
+                return;
+            }
+
+            Map map = StorageOwnerMap(setting.owner);
+            if (map == null || IsStorageNameInUse(map, setting.owner, name))
+            {
+                return;
+            }
+
+            if (setting.owner is IRenameable renameable && IsUnchangedStorageName(renameable))
+            {
+                renameable.RenamableLabel = name;
+                return;
+            }
+
+            // An ungrouped shelf has no name of its own. Match the rename button: new group, then link it.
+            if (setting.owner is IStorageGroupMember member && member.Group == null)
+            {
+                StorageGroup group = map.storageGroups.NewGroup();
+                group.RenamableLabel = name;
+                group.InitFrom(member);
+                member.SetStorageGroup(group);
+            }
+        }
+
         private static void ReadStorageSettingsFromFile(StorageSettings setting, StreamReader sr)
         {
             ThingFilterReflection tfr = new ThingFilterReflection(setting.filter);
             bool changed = false;
+            string loadedName = null;
             try
             {
                 while (!sr.EndOfStream)
@@ -1294,6 +1392,9 @@ namespace SaveStorageSettings
                         {
                             case "Priority":
                                 setting.Priority = (StoragePriority)Enum.Parse(typeof(StoragePriority), kv[1], true);
+                                break;
+                            case "name":
+                                loadedName = kv[1];
                                 break;
                             default:
                                 if (handleFilterReadLine(setting.filter, kv))
@@ -1313,6 +1414,7 @@ namespace SaveStorageSettings
                 {
                     tfr.SettingsChangedCallback();
                 }
+                ApplyLoadedStorageName(setting, loadedName);
             }
         }
 
