@@ -33,6 +33,13 @@ namespace SaveStorageSettings
     [HarmonyPatch(typeof(Pawn), "GetGizmos")]
     static class Patch_Pawn_GetGizmos
     {
+        static readonly FieldInfo OnOperationTabField = typeof(HealthCardUtility).GetField("onOperationTab", BindingFlags.NonPublic | BindingFlags.Static);
+
+        static bool OnOperationTab()
+        {
+            return OnOperationTabField != null && (bool)OnOperationTabField.GetValue(null);
+        }
+
         static IEnumerable<Gizmo> Postfix(IEnumerable<Gizmo> __result, Pawn __instance)
         {
             foreach (var aGizmo in __result)
@@ -45,7 +52,7 @@ namespace SaveStorageSettings
             if (Find.MainTabsRoot.OpenTab == MainButtonDefOf.Inspect)
             {
                 MainTabWindow_Inspect mainTabWindow_Inspect = (MainTabWindow_Inspect)MainButtonDefOf.Inspect.TabWindow;
-                if (typeof(ITab_Pawn_Health) == mainTabWindow_Inspect.OpenTabType && HealthCardUtility.onOperationTab) {
+                if (typeof(ITab_Pawn_Health) == mainTabWindow_Inspect.OpenTabType && OnOperationTab()) {
                     should_add_health_gizmos = true;
                 }
             }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-	<name>[KV] Save Storage, Outfit, Crafting, Drug, &amp; Operation Settings [1.5/1.6]</name>
+	<name>[KV] Save Storage, Outfit, Crafting, Drug, &amp; Operation Settings [1.5-1.7]</name>
 	<author>Kiame Vivacity, Taranchuk, Fishpear</author>
 	<url>https://ludeon.com/forums/index.php?topic=34075.msg</url>
 	<supportedVersions>
@@ -11,6 +11,7 @@
 		<li>1.4</li>
 		<li>1.5</li>
 		<li>1.6</li>
+		<li>1.7</li>
 	</supportedVersions>
 	<description>Save and Load Dump/Stockpile and Outfit settings. These saves can be carried over from new games to old saves.
 
@@ -30,6 +31,6 @@ Special Thanks:
 	    <displayName>Harmony</displayName>
 	    <steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
 	  </li>
-	</modDependencies>	
+	</modDependencies>
 	<packageId>savestoragesettings.kv.rw.fishtmp</packageId>
 </ModMetaData>
