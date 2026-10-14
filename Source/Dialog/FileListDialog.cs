@@ -92,7 +92,9 @@ namespace SaveStorageSettings.Dialog
             float height = (float)this.files.Count * num;
             Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, height);
             Rect outRect = new Rect(inRect.x, inRect.y, inRect.width, inRect.height);
-            if (this is SaveFilterDialog)
+            // DoTypeInField draws the name box and Save button over the bottom of this rect.
+            // Every save dialog needs the list to stop above them, or Save clicks an Overwrite button underneath.
+            if (this.ShouldDoTypeInField)
                 outRect.height -= 75f;
             outRect.height -= this.bottomAreaHeight;
             Widgets.BeginScrollView(outRect, ref this.scrollPosition, viewRect, true);
