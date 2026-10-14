@@ -96,6 +96,7 @@ namespace SaveStorageSettings.Dialog
                 {
                     this.BillStack.AddBill(b);
                     EverybodyGetsOneUtil.ApplyPersonCounter(b);
+                    BillIngredientSourceUtil.Apply(b);
                 }
                 bills.Clear();
                 bills = null;
